@@ -1,0 +1,17 @@
+-   repo: git@github.com:pre-commit/pre-commit-hooks
+    sha: dc50b7f09c9612624c97e7f11fa346937c37f444
+    hooks:
+    -   id: check-added-large-files
+    -   id: flake8
+        exclude: migrations,burg/settings/*.py,burg/requirements,burg/src
+    -   id: debug-statements
+        files: \.py$
+    -   id: trailing-whitespace
+        files: \.(py|sh|yaml|txt)$
+    -   id: end-of-file-fixer
+        files: \.(py|sh|yaml)$
+
+- repo: git://github.com/FalconSocial/pre-commit-python-sorter
+  sha: 1.0.4
+  hooks:
+  - id: python-import-sorter
