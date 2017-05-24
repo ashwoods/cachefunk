@@ -26,7 +26,18 @@ logger = get_logger(__name__)
 class Funk:
 
     sitemap_url = attr.ib()
-    _results = attr.ib(default=attr.Factory(list))
+
+    _concurrent = attr.ib(default=None)
+    _verify_ssl = attr.ib(default=True)
+    _verify_response = attr.ib(default=False)
+    _force_https = attr.ib(default=None)
+    _replace = attr.ib(default=None)
+    _session = attr.ib(init=False, repr=None)
+    _results = attr.ib(default=attr.Factory(list), repr=None)
+    _timeout = attr.ib(default=0)
+
+    def __attrs_post_init__(self):
+        self._session = r.Session()
 
     def _get_sitemap(self):
         sitemap = r.get(self.sitemap_url)
@@ -48,35 +59,33 @@ class Funk:
         return locations
 
     @staticmethod
-    def has_netloc(url):
+    def _has_netloc(url):
         return bool(urlparse(url).netloc)
 
     @cached_property
-    def urls(self):
+    def _urls(self):
         return self._parse_sitemap(self._get_sitemap())
 
     @cached_property
-    def base_url(self):
+    def _base_url(self):
         return os.path.dirname(self.sitemap_url)
 
-    def list_urls(self):
-        raise NotImplemented
+    def _get(self, url):
+        if self._force_https:
+            url = url.replace('http', 'https')
+        resp = self._session.get(url, allow_redirects=False, verify=self._verify_ssl)
+        if resp.status_code in (301, 302):
+            redirect = resp.headers.get('Location')
+            if not self._has_netloc(redirect):
+                self._session.get(urljoin(self._base_url, redirect))
+
+    def run(self):
+        if self._concurrent:
+            rs = (grequests.get(u) for u in self._urls)
+            self._results = list(grequests.imap(rs))
+        else:
+            for u in tqdm(self._urls):
+                self._results.append(self._get(u))
 
     def dry_run(self):
         raise NotImplemented
-
-    def run(self, concurrent=False, verify_ssl=True, force_https=False):
-        if concurrent:
-            rs = (grequests.get(u) for u in self.urls)
-            self._results = list(grequests.imap(rs))
-        else:
-            s = r.Session()
-            for u in tqdm(self.urls):
-                if force_https:
-                    u = u.replace('http', 'https')
-                resp = s.get(u, allow_redirects=False, verify=verify_ssl)
-                if resp.status_code in (301, 302):
-                    redirect = resp.headers.get('Location')
-                    if not self.has_netloc(redirect):
-                        s.get(urljoin(self.base_url, redirect))
-                self._results.append(s.get(u, allow_redirects=False))

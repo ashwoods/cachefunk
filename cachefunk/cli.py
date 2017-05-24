@@ -9,27 +9,29 @@ from .funk import Funk
 @click_log.init(__name__)
 @click.option('--url', help="Sitemap.xml URL")
 @click.option('--concurrent', '-c', default=False, help="Enable concurrency")
+@click.option('--timeout', default=30, help="Request timeout")
 @click.option('--verify-ssl', default=True, help='Enable SSL verification')
+@click.option('--verify-response', default=False, help='Verify the response')
 @click.option('--force-https', default=False, help='Force https')
+@click.option('--replace', default=None, help="Replace url base")
 @click.pass_context
-def cli(ctx, url, concurrent, verify_ssl, force_https):
+def cli(ctx, url, concurrent, verify_ssl, force_https, replace, verify_response, timeout):
     if ctx.obj is None:
         ctx.obj = {}
-    ctx.obj['URL'] = url
-    ctx.obj['CONCURRENT'] = concurrent
-    ctx.obj['VERIFY_SSL'] = verify_ssl
-    ctx.obj['FORCE_HTTPS'] = force_https
+    ctx.obj['sitemap_url'] = url
+    ctx.obj['concurrent'] = concurrent
+    ctx.obj['verify_ssl'] = verify_ssl
+    ctx.obj['force_https'] = force_https
+    ctx.obj['replace'] = replace
+    ctx.obj['verify_response'] = verify_response
+    ctx.obj['timeout'] = timeout
 
 
 @cli.command()
 @click.pass_context
 def run(ctx):
     """"""
-    Funk(ctx.obj['URL']).run(
-        concurrent=ctx.obj['CONCURRENT'],
-        verify_ssl=ctx.obj['VERIFY_SSL'],
-        force_https=ctx.obj['FORCE_HTTPS']
-    )
+    Funk(**ctx.obj).run()
 
 
 @cli.command()
