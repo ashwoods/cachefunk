@@ -16,16 +16,11 @@ from .funk import Funk
 @click.option('--replace', default=None, help="Replace url base")
 @click.option('--progress', default=False, help="Show progress")
 @click.pass_context
-def cli(ctx, url, concurrent, verify_ssl, force_https, replace, verify_response, timeout):
+def cli(ctx, **kwargs):
     if ctx.obj is None:
         ctx.obj = {}
-    ctx.obj['sitemap_url'] = url
-    ctx.obj['concurrent'] = concurrent
-    ctx.obj['verify_ssl'] = verify_ssl
-    ctx.obj['force_https'] = force_https
-    ctx.obj['replace'] = replace
-    ctx.obj['verify_response'] = verify_response
-    ctx.obj['timeout'] = timeout
+    ctx.obj['sitemap_url'] = kwargs.pop('url')
+    ctx.obj.update(**kwargs)
 
 
 @cli.command()

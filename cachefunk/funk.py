@@ -35,6 +35,7 @@ class Funk:
     _session = attr.ib(init=False, repr=None)
     _results = attr.ib(default=attr.Factory(list), repr=None)
     _timeout = attr.ib(default=0)
+    _progress = attr.ib(default=False)
 
     def __attrs_post_init__(self):
         self._session = r.Session()
