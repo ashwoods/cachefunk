@@ -14,7 +14,7 @@ cachefunk
    :target: https://coveralls.io/r/ashwoods/cachefunk
 
 .. image:: https://img.shields.io/pypi/l/cachefunk.svg
-   :alt: License BSD
+   :alt: License MIT
 
 
 
