@@ -15,6 +15,9 @@ cachefunk
 
 .. image:: https://img.shields.io/pypi/l/cachefunk.svg
    :alt: License MIT
+   
+A simple cache warming command line tool that can fetch a list of URLs from sitemap.xml 
+and make a GET request on each url.
 
 
 
