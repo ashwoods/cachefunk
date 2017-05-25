@@ -12,7 +12,7 @@ def read(*parts):
 
 setup(
     name="cachefunk",
-    version="0.0.0",
+    version="0.1.0",
     url='https://github.com/ashwoods/cachefunk',
     license='MIT',
     description="Sitemap.xml cache warmer",
