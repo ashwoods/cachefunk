@@ -6,9 +6,6 @@ python:
 cache:
   directories:
   - $HOME/.cache/pip
-install: pip install tox coveralls wheel
+install: pip install tox coveralls wheel tox-travis
 script: tox
-env:
-  - TOXENV=py35
-  - TOXENV=py36
 after_success: coveralls
