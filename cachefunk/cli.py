@@ -14,6 +14,7 @@ from .funk import Funk
 @click.option('--verify-response', default=False, help='Verify the response')
 @click.option('--force-https', default=False, help='Force https')
 @click.option('--replace', default=None, help="Replace url base")
+@click.option('--progress', default=False, help="Show progress")
 @click.pass_context
 def cli(ctx, url, concurrent, verify_ssl, force_https, replace, verify_response, timeout):
     if ctx.obj is None:

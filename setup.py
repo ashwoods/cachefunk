@@ -42,7 +42,8 @@ setup(
         'grequests',
         'requests',
         'tqdm',
-        'structlog'
+        'structlog',
+        'cached_property'
     ],
     zip_safe=False,
 )
