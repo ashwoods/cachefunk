@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import re
-from defusedxml import ElementTree
-import time
-from tqdm import tqdm
-from urllib.parse import urlparse, urljoin
 import os
+import re
+from urllib.parse import urljoin, urlparse
 
 import attr
 import grequests
 import requests as r
-
 from cached_property import cached_property
+from defusedxml import ElementTree
 from structlog import configure, get_logger
 from structlog.stdlib import LoggerFactory
+from tqdm import tqdm
 
 
 logging.basicConfig()
@@ -89,4 +87,4 @@ class Funk:
                 self._results.append(self._get(u))
 
     def dry_run(self):
-        raise NotImplemented
+        raise NotImplementedError
