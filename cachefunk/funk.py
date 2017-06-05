@@ -2,7 +2,7 @@
 
 import logging
 import re
-from xml.etree import ElementTree
+from defusedxml import ElementTree
 import time
 from tqdm import tqdm
 from urllib.parse import urlparse, urljoin

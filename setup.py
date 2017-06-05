@@ -33,17 +33,19 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Utilities',
     ],
     install_requires=[
+        'attrs',
+        'cached_property',
         'click',
         'click-log',
-        'attrs',
+        'defusedxml',
         'grequests',
         'requests',
-        'tqdm',
         'structlog',
-        'cached_property'
+        'tqdm',
     ],
     zip_safe=False,
 )
