@@ -26,12 +26,12 @@ def cli(ctx, **kwargs):
 @cli.command()
 @click.pass_context
 def run(ctx):
-    """"""
+    """Start the funk"""
     Funk(**ctx.obj).run()
 
 
 @cli.command()
 @click.pass_context
 def dryrun(ctx):
-    """Creates the schema if it doesn't exist and copies """
+    """Parse the xml but don't hit the site"""
     Funk(ctx.obj['URL']).dry_run()
