@@ -69,7 +69,7 @@ class Funk:
 
         if self._replace:
             parsed_url = urlparse(url)
-            url = parsed_url._replace(netloc=self._replace)
+            url = parsed_url._replace(netloc=self._replace).geturl()
 
         if self._force_https:
             url = url.replace('http', 'https')
