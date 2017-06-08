@@ -57,10 +57,6 @@ class Funk:
         locations = [str(l.text) for l in tree.findall(fstr, namespaces)]
         return locations
 
-    @staticmethod
-    def _has_netloc(url):
-        return bool(urlparse(url).netloc)
-
     @cached_property
     def _urls(self):
         return self._parse_sitemap(self._get_sitemap())
@@ -70,12 +66,18 @@ class Funk:
         return os.path.dirname(self.sitemap_url)
 
     def _get(self, url):
+
+        if self._replace:
+            parsed_url = urlparse(url)
+            url = parsed_url._replace(netloc=self._replace)
+
         if self._force_https:
             url = url.replace('http', 'https')
+
         resp = self._session.get(url, allow_redirects=False, verify=self._verify_ssl)
         if resp.status_code in (301, 302):
             redirect = resp.headers.get('Location')
-            if not self._has_netloc(redirect):
+            if not bool(urlparse(redirect).netloc):
                 self._session.get(urljoin(self._base_url, redirect))
 
     def run(self):
