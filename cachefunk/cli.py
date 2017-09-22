@@ -5,7 +5,6 @@ from .funk import Funk
 
 
 @click.group()
-@click_log.simple_verbosity_option()
 @click_log.init(__name__)
 @click.option('--url', help="Sitemap.xml URL")
 @click.option('--concurrent', '-c', default=False, help="Enable concurrency")
