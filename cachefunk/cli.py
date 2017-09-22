@@ -5,7 +5,6 @@ from .funk import Funk
 
 
 @click.group()
-@click_log.init(__name__)
 @click.option('--url', help="Sitemap.xml URL")
 @click.option('--concurrent', '-c', default=False, help="Enable concurrency")
 @click.option('--timeout', default=30, help="Request timeout")
