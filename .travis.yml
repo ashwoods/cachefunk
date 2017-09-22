@@ -1,7 +1,6 @@
 sudo: false
 language: python
 python:
-  - "3.5"
   - "3.6"
 cache:
   directories:
@@ -9,3 +8,13 @@ cache:
 install: pip install tox coveralls wheel tox-travis
 script: tox
 after_success: coveralls
+deploy:
+  provider: pypi
+  user: ashwoods
+  distributions: "sdist--formats=gztar,zip bdist_wheel"
+  on:
+    branch: master
+    tags: true
+    repo: ashwoods/cachefunk
+
+  secure: "tEEatnTgz7/ACCo0DcBui8Ptn1XYKYrUhdeDFUD4+Xy9YCbwvGGIKdXFIzYphvWT451Xj4Ii4xStuZQY/nhN68w5lX5hc/5Jj72DsJRqqxSDmAiI67D5L1gPEU4tPADAsgM6x+bS2hE30PzEMScS9rH+Qa1NThyZFS/otMlRPIIO80embk7IN+mg0djaGjKoc406PxwUTuxZotXmHyhLY3RjUOpZXfnxCviBMHt9Dto/bOfJBKvgRxUq/GdQZf5dYO+j4oz/gQDoAEMQOoEYVcEL9siQmomaIEFfDPQP9WS7K7GGIZ8K1VNJfdLDB+LHGJuy14xMKPxnssjOBHKra4/wtJuhyKshWvXP3BJUXebE9NmbE9RgwkhfT/TSWO0D/eQFwMG0EAGX6/E4TXKca+mTcCvr9tduj53JrpxXaGIkPNcFWuBQ92D8eWk8uCCEMy3NowSSxEEG3bgDUykCBtfIsvmg3x0BEpVvlEjoyaaba0G/Xwregp6Bz6XGgJ3UJkmPuI6GucJIPQlfVfLEQIXIqiIioJTaSRLcH0gytpoP5A/PvhKI3LF7J9TiThSLKowBamuCRrak0V0Aqe8aRXwM3ntwyLtno+P/+DOgqW16ZZ4crdN8vEqad4Q4NvrgLxP+eX86/wi4yjS8+0/G7fpF+r+dT4HvhYc05S6AqeY="
